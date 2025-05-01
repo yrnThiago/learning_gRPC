@@ -4,14 +4,15 @@
 // 	protoc        v6.31.0--rc2
 // source: user.proto
 
-package __
+package pb
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -281,13 +282,15 @@ func file_user_proto_rawDescGZIP() []byte {
 	return file_user_proto_rawDescData
 }
 
-var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_user_proto_goTypes = []any{
-	(*AddUserRequest)(nil),  // 0: pb.AddUserRequest
-	(*AddUserResponse)(nil), // 1: pb.AddUserResponse
-	(*GetUserRequest)(nil),  // 2: pb.GetUserRequest
-	(*GetUserResponse)(nil), // 3: pb.GetUserResponse
-}
+var (
+	file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+	file_user_proto_goTypes  = []any{
+		(*AddUserRequest)(nil),  // 0: pb.AddUserRequest
+		(*AddUserResponse)(nil), // 1: pb.AddUserResponse
+		(*GetUserRequest)(nil),  // 2: pb.GetUserRequest
+		(*GetUserResponse)(nil), // 3: pb.GetUserResponse
+	}
+)
 var file_user_proto_depIdxs = []int32{
 	0, // 0: pb.User.AddUser:input_type -> pb.AddUserRequest
 	2, // 1: pb.User.GetUser:input_type -> pb.GetUserRequest
