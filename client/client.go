@@ -22,6 +22,7 @@ func Run() {
 	defer dial.Close()
 
 	userClient := pb.NewUserClient(dial)
+	paymentClient := pb.NewPaymentClient(dial)
 
 	user, err := userClient.AddUser(context.Background(), &pb.AddUserRequest{
 		Id:   "1",
@@ -51,4 +52,13 @@ func Run() {
 	}
 
 	fmt.Printf("User returned from GetUser method: %v\n", getUserResponse)
+
+	fmt.Printf("Generating pix code for order id %s\n", "123")
+
+	generatedPayment, err := paymentClient.GeneratePix(context.Background(), &pb.GeneratePixRequest{OrderId: "123"})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("pix code: %s (order: %s)\n", generatedPayment.PixCode, generatedPayment.OrderId)
 }

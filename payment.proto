@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "pb/";
+
+service Payment {
+  rpc GeneratePix(GeneratePixRequest) returns(GeneratePixResponse);
+}
+
+message GeneratePixRequest {
+ string orderId = 1;
+}
+
+message GeneratePixResponse {
+ string orderId = 1;
+ string pixCode = 2;
+}
+

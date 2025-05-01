@@ -18,6 +18,37 @@ type User struct {
 	Age  int32
 }
 
+type Payment struct {
+	OrderId string
+}
+
+type PaymentService struct {
+	pb.UnimplementedPaymentServer
+	mu sync.Mutex
+}
+
+func NewPaymentService() *PaymentService {
+	return &PaymentService{}
+}
+
+func (ps *PaymentService) GeneratePix(ctx context.Context, req *pb.GeneratePixRequest) (*pb.GeneratePixResponse, error) {
+	ps.mu.Lock()
+
+	defer ps.mu.Unlock()
+
+	return &pb.GeneratePixResponse{
+		OrderId: req.OrderId,
+		PixCode: "TESTING",
+	}, nil
+}
+
+type UserService struct {
+	pb.UnimplementedUserServer
+
+	users map[string]*User
+	mu    sync.Mutex
+}
+
 func Run() {
 	listen, err := net.Listen("tcp", ":50051")
 	if err != nil {
@@ -26,19 +57,13 @@ func Run() {
 
 	s := grpc.NewServer()
 	pb.RegisterUserServer(s, NewUserService())
+	pb.RegisterPaymentServer(s, NewPaymentService())
 	reflection.Register(s)
 
 	err = s.Serve(listen)
 	if err != nil {
 		panic(err)
 	}
-}
-
-type UserService struct {
-	pb.UnimplementedUserServer
-
-	users map[string]*User
-	mu    sync.Mutex
 }
 
 func NewUserService() *UserService {
